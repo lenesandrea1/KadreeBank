@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: kadree-bank-db
+    environment:
+      POSTGRES_USER: kadree
+      POSTGRES_PASSWORD: kadree
+      POSTGRES_DB: kadreebank
+    ports:
+      - "55432:5432"
+    volumes:
+      - kadree_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kadree -d kadreebank"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  kadree_pgdata:

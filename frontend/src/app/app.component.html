@@ -1,0 +1,54 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="logo">K</span>
+      <strong>{{ 'brand' | t }}</strong>
+    </div>
+    <p class="hello">{{ 'welcome' | t }}</p>
+    <p class="hello-sub">{{ 'welcomeSub' | t }}</p>
+
+    <p class="group">{{ 'menuMain' | t }}</p>
+    <nav>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        {{ 'navDashboard' | t }}
+      </a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        {{ 'navAccounts' | t }}
+      </a>
+      <a routerLink="/reportes" routerLinkActive="active">{{ 'navReports' | t }}</a>
+    </nav>
+
+    <p class="group">{{ 'menuSupport' | t }}</p>
+    <nav>
+      <span class="ghost">{{ 'navHelp' | t }}</span>
+    </nav>
+  </aside>
+
+  <div class="stage">
+    <header class="topbar">
+      <div class="pills">
+        <a routerLink="/" routerLinkActive="on" [routerLinkActiveOptions]="{ exact: true }">{{ 'navAccounts' | t }}</a>
+        <a routerLink="/reportes" routerLinkActive="on">{{ 'navReports' | t }}</a>
+      </div>
+      <input class="search" type="search" [placeholder]="'search' | t" />
+      <div class="actions">
+        <button type="button" class="chip" (click)="i18n.toggle()">
+          {{ i18n.lang() === 'es' ? ('langEn' | t) : ('langEs' | t) }}
+        </button>
+        <button type="button" class="chip" (click)="theme.toggle()">
+          {{ theme.theme() === 'dark' ? ('themeLight' | t) : ('themeDark' | t) }}
+        </button>
+        <div class="profile">
+          <span class="avatar">KB</span>
+          <div>
+            <strong>{{ 'profileName' | t }}</strong>
+            <small>{{ 'profileMail' | t }}</small>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <router-outlet />
+    </main>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="layout">
+  <section class="card span">
+    <h2>{{ 'reportsTitle' | t }}</h2>
+    <form (ngSubmit)="load()">
+      <label>
+        {{ 'year' | t }}
+        <input type="number" name="year" [(ngModel)]="year" />
+      </label>
+      <label>
+        {{ 'month' | t }}
+        <input type="number" name="month" min="1" max="12" [(ngModel)]="month" />
+      </label>
+      <button class="primary" type="submit">{{ 'consult' | t }}</button>
+    </form>
+    @if (error()) {
+      <p class="down">{{ error() }}</p>
+    }
+  </section>
+
+  <section class="card">
+    <h3>{{ 'ranking' | t }}</h3>
+    <p class="muted">{{ 'rankingHint' | t }}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'customer' | t }}</th>
+          <th>{{ 'transactions' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of ranking(); track row.customerId) {
+          <tr>
+            <td>{{ row.customerName }}</td>
+            <td>{{ row.transactionCount }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h3>{{ 'offCity' | t }}</h3>
+    <p class="muted">{{ 'offCityHint' | t }}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'customer' | t }}</th>
+          <th>{{ 'account' | t }}</th>
+          <th>{{ 'origin' | t }}</th>
+          <th>{{ 'totalWithdrawn' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of offCity(); track row.accountNumber) {
+          <tr>
+            <td>{{ row.customerName }}</td>
+            <td>{{ row.accountNumber }}</td>
+            <td>{{ row.originCity }}</td>
+            <td>{{ row.totalWithdrawn | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+</div>

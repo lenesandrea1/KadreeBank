@@ -1,0 +1,179 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  padding: 1.4rem 1.1rem;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.4rem;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.hello {
+  margin: 0;
+  font-weight: 600;
+}
+
+.hello-sub,
+.group,
+.ghost,
+small {
+  color: var(--muted);
+}
+
+.hello-sub {
+  margin: 0.2rem 0 1.4rem;
+  font-size: 0.82rem;
+}
+
+.group {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 1rem 0 0.45rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+nav a,
+.ghost {
+  padding: 0.55rem 0.75rem;
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+nav a.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.pills {
+  display: flex;
+  gap: 0.35rem;
+  background: var(--chip-bg);
+  padding: 0.2rem;
+  border-radius: 999px;
+}
+
+.pills a {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.pills a.on {
+  background: var(--card);
+  color: var(--text);
+}
+
+.search {
+  flex: 1;
+  border: 0;
+  background: var(--chip-bg);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.chip {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.profile strong,
+.profile small {
+  display: block;
+  line-height: 1.2;
+}
+
+.profile small {
+  font-size: 0.72rem;
+}
+
+main {
+  padding: 1.2rem 1.4rem 2rem;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}

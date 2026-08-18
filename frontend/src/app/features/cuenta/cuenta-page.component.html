@@ -1,0 +1,150 @@
+<div class="layout">
+  <section class="card holding">
+    <p class="muted label">{{ 'totalHolding' | t }}</p>
+    <h2>{{ totalBalance() | currency:'COP':'symbol-narrow':'1.0-0' }}</h2>
+    <p class="up">{{ 'returnLabel' | t }} · {{ 'range6m' | t }}</p>
+    @if (balance(); as b) {
+      <small class="muted">{{ b.number }} · {{ b.originCity }}</small>
+    }
+  </section>
+
+  <section class="card accounts">
+    <div class="row">
+      <h3>{{ 'myAccounts' | t }}</h3>
+    </div>
+    <div class="account-row">
+      @for (account of accounts(); track account.id) {
+        <button
+          type="button"
+          class="mini"
+          [class.active]="account.id === selectedId"
+          (click)="selectAccount(account.id)"
+        >
+          <strong>{{ account.number }}</strong>
+          <span class="muted">{{ accountType(account.type) }}</span>
+          <b>{{ account.balance | currency:'COP':'symbol-narrow':'1.0-0' }}</b>
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="card chart">
+    <div class="row">
+      <h3>{{ 'performance' | t }}</h3>
+    </div>
+    <svg viewBox="0 0 640 180" class="spark">
+      <path [attr.d]="chart().area" class="area" />
+      <path [attr.d]="chart().line" class="line" />
+    </svg>
+  </section>
+
+  <section class="card table-card">
+    <div class="row">
+      <h3>{{ 'overview' | t }}</h3>
+      <div class="filters">
+        <button type="button" [class.on]="filter() === 'all'" (click)="filter.set('all')">{{ 'all' | t }}</button>
+        <button type="button" [class.on]="filter() === 'Deposit'" (click)="filter.set('Deposit')">{{ 'deposits' | t }}</button>
+        <button type="button" [class.on]="filter() === 'Withdrawal'" (click)="filter.set('Withdrawal')">{{ 'withdrawals' | t }}</button>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'date' | t }}</th>
+          <th>{{ 'type' | t }}</th>
+          <th>{{ 'city' | t }}</th>
+          <th>{{ 'amount' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (m of visibleMovements(); track m.id) {
+          <tr>
+            <td>{{ m.occurredAt | date:'short' }}</td>
+            <td>{{ movementType(m.type) }}</td>
+            <td>{{ m.city }}</td>
+            <td [class.up]="m.type === 'Deposit'" [class.down]="m.type === 'Withdrawal'">
+              {{ m.amount | currency:'COP':'symbol-narrow':'1.0-0' }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    @if (visibleMovements().length === 0) {
+      <p class="muted">{{ 'noMovements' | t }}</p>
+    }
+  </section>
+
+  <section class="card statement">
+    <div class="row">
+      <div>
+        <h3>{{ 'statementTitle' | t }}</h3>
+        <p class="muted">{{ 'statementHint' | t }}</p>
+      </div>
+    </div>
+    <form (ngSubmit)="loadStatement()">
+      <label>
+        {{ 'year' | t }}
+        <input type="number" name="statementYear" [(ngModel)]="statementYear" />
+      </label>
+      <label>
+        {{ 'month' | t }}
+        <input type="number" name="statementMonth" min="1" max="12" [(ngModel)]="statementMonth" />
+      </label>
+      <button class="primary" type="submit">{{ 'generateStatement' | t }}</button>
+    </form>
+    @if (statement(); as s) {
+      <div class="statement-summary">
+        <p><span class="muted">{{ 'openingBalance' | t }}:</span> {{ s.openingBalance | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+        <p><span class="muted">{{ 'closingBalance' | t }}:</span> {{ s.closingBalance | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>{{ 'date' | t }}</th>
+            <th>{{ 'type' | t }}</th>
+            <th>{{ 'city' | t }}</th>
+            <th>{{ 'amount' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (m of s.movements; track m.id) {
+            <tr>
+              <td>{{ m.occurredAt | date:'short' }}</td>
+              <td>{{ movementType(m.type) }}</td>
+              <td>{{ m.city }}</td>
+              <td>{{ m.amount | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      @if (s.movements.length === 0) {
+        <p class="muted">{{ 'noStatement' | t }}</p>
+      }
+    }
+  </section>
+
+  <section class="card operate">
+    <h3>{{ 'watchlist' | t }}</h3>
+    @if (error()) {
+      <p class="down">{{ error() }}</p>
+    }
+    <form (ngSubmit)="submit()">
+      <label>
+        {{ 'type' | t }}
+        <select [(ngModel)]="operation" name="operation">
+          <option value="consignacion">{{ 'deposit' | t }}</option>
+          <option value="retiro">{{ 'withdraw' | t }}</option>
+        </select>
+      </label>
+      <label>
+        {{ 'amount' | t }}
+        <input type="number" name="amount" min="1" step="1000" [(ngModel)]="amount" />
+      </label>
+      <label>
+        {{ 'city' | t }}
+        <input type="text" name="city" [(ngModel)]="city" />
+      </label>
+      <button class="primary" type="submit" [disabled]="loading()">{{ 'apply' | t }}</button>
+    </form>
+  </section>
+</div>

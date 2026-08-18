@@ -1,0 +1,52 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.span {
+  grid-column: 1 / -1;
+}
+
+h2,
+h3 {
+  margin: 0 0 0.4rem;
+}
+
+form {
+  display: flex;
+  gap: 0.8rem;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+input,
+.primary {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--chip-bg);
+  padding: 0.45rem 0.8rem;
+}
+
+.primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  cursor: pointer;
+  height: 2.4rem;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

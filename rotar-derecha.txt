@@ -1,0 +1,42 @@
+2. Rotar a la derecha m veces los elementos de un arreglo
+
+Rotar m veces a la derecha (m >= 0, n = tamaño del arreglo, n >= 0).
+No se pierde ningún elemento, solo cambian de sitio.
+
+Ejemplos:
+  [1,2,3,4]  m=1  ->  [4,1,2,3]
+  [1,2,3,4]  m=2  ->  [3,4,1,2]
+  [1,2,3,4]  m=3  ->  [2,3,4,1]
+  [1,2,3,4]  m=4  ->  [1,2,3,4]   (dar la vuelta completa queda igual)
+
+C#
+
+public static int[] RotateRight(int[] arr, int m)
+{
+    if (arr == null || arr.Length == 0 || m == 0)
+        return arr;
+
+    int n = arr.Length;
+    m = m % n; // rotar n veces es lo mismo que no rotar
+
+    if (m == 0)
+        return arr;
+
+    int[] res = new int[n];
+
+    for (int i = 0; i < m; i++)
+        res[i] = arr[n - m + i]; // los de atrás pasan al frente
+
+    for (int i = m; i < n; i++)
+        res[i] = arr[i - m];
+
+    return res;
+}
+
+int[] arr = { 1, 2, 3, 4 };
+RotateRight(arr, 1); // 4,1,2,3
+RotateRight(arr, 2); // 3,4,1,2
+RotateRight(arr, 5); // igual que m=1, porque 5 % 4 = 1
+
+La idea: los últimos m números se van al inicio y el resto se corre.
+Uso m % n para no dar vueltas de más (si m es 5 y hay 4 posiciones, es lo mismo que rotar 1).
